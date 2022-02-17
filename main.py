@@ -27,23 +27,30 @@ class Measuration:
 
     def hundreds(self, num):
         h = self.unit(num[0])
+        if num[1:] == '00':
+            return f'{h} hundred'
+            
         t = self.tens(num[1:])
         u = self.unit(num[-1])
 
-        if num[1:] == '00':
-            return f'{h} hundred'
-        elif (num[1] == '0') and (num[-1] != '0'):
+        if (num[1] == '0') and (num[-1] != '0'):
             return f'{h} hundred and {u}'
         else:
             return f'{h} hundred and {t}'
     
     def thousands(self, num):
-        for_hundreds = self.hundreds(num[1:])
+        th = self.unit(num[0])
 
-        if num[1] == "0":
-            return f'{self.unit(num[0])} thousand, and {self.tens(num[1:])}'
-        else:
-            return f'{self.unit(num[0])} thousand, {self.hundreds(num[1:])}'
+        if num[1:] == '000':
+            return f'{th} thousand'
+
+        h = self.hundreds(num[-3:])
+        t = self.unit(num[-2:])
+
+        if (num[1] != '0') and (num[2] == '0') and (num[3] != '0'):
+            return f'{th} {h}'
+        elif (num[1] == '0') and (num[2] != '0'):
+            return f'{th} thousand and {t}'
 
     def get_words(self):
         if len(self.number) == 1:
