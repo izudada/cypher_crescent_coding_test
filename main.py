@@ -56,14 +56,14 @@ class Measuration:
         t = self.tens(num[2:])
         u = self.unit(num[-1])
 
-        if len(str(num_int % 1000)) == 3:
+        if num[1:] == '000':
+            return f'{th} thousand'
+        elif len(str(num_int % 1000)) == 3:
             return f'{th} thousand, {h}' 
         elif len(str(num_int % 1000)) == 2:
             return f'{th} thousand and {t}'
         elif len(str(num_int % 1000)) == 1:
-            return f'{th} thousand'
-        else:
-            return f'{th} thousand and {u}'
+            return f'{th} thousand  and {u}'
 
     def get_words(self):
         if len(self.number) == 1:
