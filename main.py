@@ -16,19 +16,9 @@ class Measuration:
         return num_letters[num]
   
     def tens(self, num):
-        
-        for_unit = self.unit(self.number[-1])
-        if num in num_letters:
-            return num_letters[num]
-
-        if (self.integer > 19) and (self.integer < 30):
-            return f'{num_letters["20"]}ty {for_unit}'
-        elif (self.integer > 29) and (self.integer < 40):
-            return f'{num_letters["30"]}ty {for_unit}'
-        elif (self.integer > 49) and (self.integer < 50):
-            return f'{num_letters["50"]}ty {for_unit}'
-        else:
-            return f'{num_letters[self.number[-2]]}ty {for_unit}'
+        for_unit = self.unit(num[-1])
+        concat_tens = num[0] + '0'
+        return f'{num_letters[concat_tens]} {for_unit}'
 
     def hundreds(self, num):
         for_tens = self.tens(num[-2:])
@@ -47,8 +37,6 @@ class Measuration:
             return f'{self.unit(num[0])} thousand, {self.hundreds(num[1:])}'
 
     def get_words(self):
-        if self.number in num_letters:
-            return num_letters[self.number].capitalize()
         if len(self.number) == 1:
             return self.unit(self.number)
         elif len(self.number) == 2:
