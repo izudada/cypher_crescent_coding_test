@@ -18,18 +18,29 @@ class Measuration:
         self.integer = int(number)
     
     def unit(self, num):
+        if num == '0':
+            return ''
         return num_letters[num]
   
     def tens(self, num):
+        if num in num_letters:
+            return num_letters[num]
+            
         for_unit = self.unit(num[-1])
         concat_tens = num[0] + '0'
-        return f'{num_letters[concat_tens]} {for_unit}'
+        if num[0] == '0':
+            return for_unit
+        elif num == '00':
+            return ''
+        else:
+            return f'{num_letters[concat_tens]} {for_unit}'
 
     def hundreds(self, num):
         h = self.unit(num[0])
+
         if num[1:] == '00':
             return f'{h} hundred'
-            
+
         t = self.tens(num[1:])
         u = self.unit(num[-1])
 
@@ -39,18 +50,18 @@ class Measuration:
             return f'{h} hundred and {t}'
     
     def thousands(self, num):
+        num_int = int(num)
         th = self.unit(num[0])
+        h = self.hundreds(num[1:])
+        t = self.tens(num[2:])
+        u = self.unit(num[-1])
 
-        if num[1:] == '000':
-            return f'{th} thousand'
-
-        h = self.hundreds(num[-3:])
-        t = self.unit(num[-2:])
-
-        if (num[1] != '0') and (num[2] == '0') and (num[3] != '0'):
-            return f'{th} {h}'
-        elif (num[1] == '0') and (num[2] != '0'):
+        if len(str(num_int % 1000)) == 3:
+            return f'{th} thousand, {h}' 
+        elif len(str(num_int % 1000)) == 2:
             return f'{th} thousand and {t}'
+        else:
+            return f'{th} thousand and {u}'
 
     def get_words(self):
         if len(self.number) == 1:
