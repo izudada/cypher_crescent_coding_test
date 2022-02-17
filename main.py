@@ -1,6 +1,8 @@
 """
     Write a program that converts a number in the range [0…10000] to words,
     corresponding to the English pronunciation.
+
+    constraints = [0, 10, 19, 37, 405, 1047, 4598]
 """
 
 num_letters = { 
@@ -11,6 +13,7 @@ num_letters = {
   "70": "seventy", "80": "eighty", "90": "ninety", "100": "one hundred", "1000": "one thousand", 
   "10000": "ten thousand"
 }
+
 
 class Measuration:
     def __init__(self, number):
@@ -23,31 +26,28 @@ class Measuration:
         return num_letters[num]
   
     def tens(self, num):
+        num_int = int(num)
+
         if num in num_letters:
             return num_letters[num]
-            
-        for_unit = self.unit(num[-1])
-        concat_tens = num[0] + '0'
-        if num[0] == '0':
-            return for_unit
-        elif num == '00':
-            return ''
+        elif num[0] == '0':
+            return f'{self.unit(num[-1])}'
         else:
-            return f'{num_letters[concat_tens]} {for_unit}'
+            new_num = num[0] + '0'
+            return f'{num_letters[new_num]} {self.unit(num[-1])}'
 
     def hundreds(self, num):
+        num_int = int(num)
         h = self.unit(num[0])
-
-        if num[1:] == '00':
-            return f'{h} hundred'
-
         t = self.tens(num[1:])
         u = self.unit(num[-1])
-
-        if (num[1] == '0') and (num[-1] != '0'):
-            return f'{h} hundred and {u}'
-        else:
+        
+        if num[1:] == '00':
+            return f'{h} hundred'
+        elif len(str(num_int % 100)) == 2:
             return f'{h} hundred and {t}'
+        else:
+            return f'{h} hundred and {u}'
     
     def thousands(self, num):
         num_int = int(num)
@@ -60,6 +60,8 @@ class Measuration:
             return f'{th} thousand, {h}' 
         elif len(str(num_int % 1000)) == 2:
             return f'{th} thousand and {t}'
+        elif len(str(num_int % 1000)) == 1:
+            return f'{th} thousand'
         else:
             return f'{th} thousand and {u}'
 
@@ -76,6 +78,7 @@ class Measuration:
 
 def main():
     user_input = input("Enter numbers you want to convert into words: \n")
+
     if user_input == "0":
         print("Zero")
    
