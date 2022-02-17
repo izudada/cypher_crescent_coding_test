@@ -21,12 +21,16 @@ class Measuration:
         return f'{num_letters[concat_tens]} {for_unit}'
 
     def hundreds(self, num):
-        for_tens = self.tens(num[-2:])
+        h = self.unit(num[0])
+        t = self.tens(num[1:])
+        u = self.unit(num[-1])
 
-        if num[1] == "0":
-            return f'{num_letters[self.number[1]]} hundred and {self.unit(num[-1])}'
+        if num[1:] == '00':
+            return f'{h} hundred'
+        elif (num[1] == '0') and (num[-1] != '0'):
+            return f'{h} hundred and {u}'
         else:
-            return f'{num_letters[self.number[1]]} hundred and {for_tens}'
+            return f'{h} hundred and {t}'
     
     def thousands(self, num):
         for_hundreds = self.hundreds(num[1:])
