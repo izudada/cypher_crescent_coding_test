@@ -90,4 +90,4 @@ def main():
         main()
 
 
-print(main())
+print(main().capitalize())
