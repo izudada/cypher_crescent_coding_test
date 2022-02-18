@@ -17,6 +17,16 @@ class BaseConversion:
         for pow in range(0, len(upper_bound)):
             result += int(upper_bound[pow]) * (self.source_base ** pow)
         return result
+    
+    def ten_to_two(self):
+        result = ''
 
-# case = BaseConversion(2, 10011, 10)
-# print(case.two_to_ten())
+        while self.number >= 1:
+            result += str(self.number % self.target_base)
+            self.number //= self.target_base
+        return result[::-1]
+
+# case = BaseConversion(2, 10011, 10) 
+# print(case.two_to_ten())  #   19
+# case2 = BaseConversion(10, 29, 2) 
+# print(case2.ten_to_two())   #   11101
