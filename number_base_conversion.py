@@ -5,7 +5,18 @@
 """
 
 class BaseConversion:
-    def __init__(self, from_base, number, to_base):
-        self.from_base = from_base
+    def __init__(self, source_base, number, target_base):
+        self.source_base = source_base
         self.number = number
-        self.to_base = to_base
+        self.target_base = target_base
+    
+    def two_to_ten(self):
+        result = 0
+        upper_bound = str(self.number)[::-1]
+
+        for pow in range(0, len(upper_bound)):
+            result += int(upper_bound[pow]) * (self.source_base ** pow)
+        return result
+
+# case = BaseConversion(2, 10011, 10)
+# print(case.two_to_ten())
