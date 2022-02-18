@@ -65,6 +65,16 @@ class Measuration:
         elif len(str(num_int % 1000)) == 1:
             return f'{th} thousand  and {u}'
 
+    def tens_of_thousands(self, num):
+        num_int = int(num)
+        tt = self.unit(num[0] + '0') 
+        t = self.thousands(num[1:])
+
+        if num[1:] == '0000':
+            return f'{tt} thousand'
+        elif (len(str(num_int % 10000)) == 4) or (len(str(num_int % 10000)) == 3):
+            return f'{tt} {t}'
+            
     def get_words(self):
         if len(self.number) == 1:
             return self.unit(self.number)
@@ -72,8 +82,10 @@ class Measuration:
             return self.tens(self.number)
         elif len(self.number) == 3:
             return self.hundreds(self.number)
-        else:
+        elif len(self.number) == 4:
             return self.thousands(self.number)
+        else:
+            return self.tens_of_thousands(self.number)
       
 
 def main():
