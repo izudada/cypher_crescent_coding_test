@@ -10,7 +10,7 @@ class BaseConversion:
         self.number = number
         self.target_base = target_base
     
-    def two_to_ten(self):
+    def all_to_ten(self):
         result = 0
         upper_bound = str(self.number)[::-1]
 
